@@ -3,3 +3,4 @@ NetworkId = 1
 [Node]
 HTTPHost = "0.0.0.0"
 HTTPPort = 8545
+DataDir = "/data/ethereum"
