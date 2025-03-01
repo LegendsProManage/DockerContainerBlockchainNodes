@@ -38,7 +38,8 @@ COPY dashboard/ /var/www/html/
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/start.sh /start.sh
-RUN chmod +x /start.sh
+# Add this line after copying start.sh
+RUN chmod +x /docker/start.sh
 
 EXPOSE 80 8332 8545 8899 10332 7681
 CMD ["/start.sh"]
