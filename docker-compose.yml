@@ -1,1 +1,29 @@
 
+version: '3.8'
+
+services:
+  blockchain-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "8332:8332"
+      - "8545:8545"
+      - "8899:8899"
+      - "10332:10332"
+      - "7681:7681"
+    volumes:
+      - bitcoin_data:/data/bitcoin
+      - ethereum_data:/data/ethereum
+      - solana_data:/data/solana
+      - litecoin_data:/data/litecoin
+    environment:
+      - TZ=UTC
+    restart: always
+
+volumes:
+  bitcoin_data:
+  ethereum_data:
+  solana_data:
+  litecoin_data:
