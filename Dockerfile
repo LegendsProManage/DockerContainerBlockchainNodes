@@ -3,6 +3,9 @@ FROM ubuntu:22.04
 # Install dependencies
 RUN apt update && apt install -y wget curl nano git neofetch software-properties-common supervisor nginx ttyd
 
+# Create data directories
+RUN mkdir -p /data/{bitcoin,ethereum,solana,litecoin}
+
 # Install Blockchain Clients
 # Bitcoin Core
 RUN wget https://bitcoincore.org/bin/bitcoin-core-25.0/bitcoin-25.0-x86_64-linux-gnu.tar.gz && \
@@ -24,15 +27,18 @@ RUN wget https://download.litecoin.org/litecoin-0.21.2.2/linux/litecoin-0.21.2.2
     mv litecoin-0.21.2.2/bin/* /usr/local/bin/ && \
     rm -rf litecoin-0.21.2.2*
 
-# Configure Supervisor
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Copy configurations
+COPY configs/* /root/.bitcoin/
+COPY configs/* /root/.ethereum/
+COPY configs/* /root/.solana/
+COPY configs/* /root/.litecoin/
 
-# Configure Nginx
+# Setup dashboard
+COPY dashboard/ /var/www/html/
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY dashboard.html /var/www/html/index.html
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY docker/start.sh /start.sh
+RUN chmod +x /start.sh
 
-# Expose all required ports
-EXPOSE 8332 8333 8545 8546 8899 9933 19500 19501 10332 10333 7681
-
-# Start Supervisor + Nginx
-CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+EXPOSE 80 8332 8545 8899 10332 7681
+CMD ["/start.sh"]
