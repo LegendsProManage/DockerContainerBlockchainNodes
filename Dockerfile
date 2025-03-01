@@ -5,10 +5,10 @@ RUN apt update && apt install -y \
     wget curl nano git build-essential libssl-dev supervisor
 
 # Install Bitcoin Core
-RUN wget https://bitcoincore.org/bin/bitcoin-core-26.0/bitcoin-26.0-x86_64-linux-gnu.tar.gz && \
-    tar -xzf bitcoin-26.0-x86_64-linux-gnu.tar.gz && \
-    mv bitcoin-26.0/bin/* /usr/local/bin/ && \
-    rm -rf bitcoin-26.0*
+RUN wget https://bitcoincore.org/bin/bitcoin-core-28.1/bitcoin-28.1-x86_64-linux-gnu.tar.gz && \
+    tar -xzf bitcoin-28.1-x86_64-linux-gnu.tar.gz && \
+    mv bitcoin-28.1/bin/* /usr/local/bin/ && \
+    rm -rf bitcoin-28.1*
 
 # Install Ethereum (Geth)
 RUN wget https://gethstore.blob.core.windows.net/builds/geth-linux-amd64-1.13.11-1f23e315.tar.gz && \
